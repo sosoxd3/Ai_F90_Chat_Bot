@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
-import openai
 import config
+import google.generativeai as genai
 
-# تعيين المفتاح
-openai.api_key = config.OPENAI_API_KEY
+# تفعيل مفتاح Google
+genai.configure(api_key=config.GOOGLE_API_KEY)
 
-def ask_openai(message):
+# استخدام موديل Gemini
+model = genai.GenerativeModel("gemini-1.5-flash")
+
+def ask_ai(message):
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "أنت مساعد ذكي."},
-                {"role": "user", "content": message}
-            ]
-        )
-        return response.choices[0].message["content"]
+        response = model.generate_content(message)
+        return response.text
 
     except Exception as e:
-        return f"⚠️ حدث خطأ أثناء الاتصال بـ OpenAI:\n{str(e)}"
+        return f"⚠️ حدث خطأ أثناء الاتصال بـ Google AI:\n{str(e)}"

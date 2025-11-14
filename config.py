@@ -1,4 +1,4 @@
-here# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 # ========== إعدادات عامة ==========
 BOT_NAME = "Ai F90 Chat Bot"

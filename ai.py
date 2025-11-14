@@ -1,34 +1,24 @@
 # -*- coding: utf-8 -*-
 """
 ai.py
-التعامل مع OpenAI للشات
+التعامل مع OpenAI (الإصدار الجديد)
 """
 
-import openai
+from openai import OpenAI
 import config
 
-# تفعيل المفتاح من config
-openai.api_key = config.OPENAI_API_KEY
+client = OpenAI(api_key=config.OPENAI_API_KEY)
 
-# ==================================
-#  دالة أساسية لطلب الرد من GPT
-# ==================================
-def ask_ai(user_text: str):
-    """
-    ترسل رسالة إلى نموذج OpenAI وتعيد الرد.
-    """
-
+def ask_ai(text):
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "أنت مساعد ذكي ترد بالعربية ببساطة ووضوح."},
-                {"role": "user", "content": user_text}
+                {"role": "system", "content": "أنت مساعد ذكي ترد بالعربية."},
+                {"role": "user", "content": text}
             ]
         )
-
-        reply = response.choices[0].message["content"]
-        return reply
+        return response.choices[0].message["content"]
 
     except Exception as e:
-        return f"⚠️ حدث خطأ أثناء الاتصال بـ OpenAI:\n{str(e)}"
+        return f"⚠️ حدث خطأ أثناء الاتصال بـ OpenAI:\n{e}"

@@ -24,13 +24,11 @@ ADMINS = {
 import os
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-OPENAI_API_KEY     = os.getenv("OPENAI_API_KEY")
-GOOGLE_API_KEY     = os.getenv("GOOGLE_API_KEY")
+GOOGLE_API_KEY     = os.getenv("GOOGLE_API_KEY")   # المفتاح الأساسي الوحيد
 
 # تأكد أن المفاتيح موجودة
 if not TELEGRAM_BOT_TOKEN:
     raise ValueError("❌ TELEGRAM_BOT_TOKEN غير موجود في Environment!")
-if not OPENAI_API_KEY:
-    raise ValueError("❌ OPENAI_API_KEY غير موجود في Environment!")
+
 if not GOOGLE_API_KEY:
-    print("⚠️ GOOGLE_API_KEY غير مضاف — ميزة الصور قد لا تعمل.")
+    raise ValueError("❌ GOOGLE_API_KEY غير موجود في Environment! (مطلوب للدردشة والصور)")

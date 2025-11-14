@@ -1,24 +1,20 @@
 # -*- coding: utf-8 -*-
-"""
-ai.py
-التعامل مع OpenAI (الإصدار الجديد)
-"""
-
-from openai import OpenAI
+import openai
 import config
 
-client = OpenAI(api_key=config.OPENAI_API_KEY)
+# تعيين المفتاح
+openai.api_key = config.OPENAI_API_KEY
 
-def ask_ai(text):
+def ask_openai(message):
     try:
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "أنت مساعد ذكي ترد بالعربية."},
-                {"role": "user", "content": text}
+                {"role": "system", "content": "أنت مساعد ذكي."},
+                {"role": "user", "content": message}
             ]
         )
         return response.choices[0].message["content"]
 
     except Exception as e:
-        return f"⚠️ حدث خطأ أثناء الاتصال بـ OpenAI:\n{e}"
+        return f"⚠️ حدث خطأ أثناء الاتصال بـ OpenAI:\n{str(e)}"
